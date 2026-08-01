@@ -1,0 +1,73 @@
+:root {
+  /* Color -- "signal console" palette: deep ink base, three semantic accents tied to the
+     three kinds of work the pipeline does: teal for stored/retrieved data, violet for LLM
+     reasoning, amber for a live/dynamic tool call. */
+  --bg: #0a0e13;
+  --panel: #10161d;
+  --panel-2: #161d26;
+  --border: #232d3a;
+  --border-soft: #1a222c;
+  --text: #e7ecf2;
+  --text-muted: #8291a3;
+  --text-faint: #4d5c6e;
+
+  --accent-kb: #35c2c1;       /* retrieval / stored KB data */
+  --accent-kb-dim: #1f4443;
+  --accent-reason: #9b8cfb;   /* LLM reasoning steps (route + synthesize) */
+  --accent-reason-dim: #332c5c;
+  --accent-tool: #f2a93b;     /* live tool call */
+  --accent-tool-dim: #4a3512;
+  --accent-danger: #e5484d;
+  --accent-danger-dim: #4a1f21;
+
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(1200px 600px at 15% -10%, #12202a 0%, transparent 55%),
+    radial-gradient(900px 500px at 100% 0%, #1a1530 0%, transparent 50%),
+    var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--accent-reason);
+  color: #0a0e13;
+}
+
+button {
+  font-family: inherit;
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-faint); }
+
+:focus-visible {
+  outline: 2px solid var(--accent-reason);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

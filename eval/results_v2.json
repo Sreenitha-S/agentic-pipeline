@@ -1,0 +1,1128 @@
+[
+  {
+    "question": "How much does the Team plan cost per month?",
+    "trace": [
+      {
+        "step": "retrieve",
+        "latency_ms": 0.9,
+        "hits": [
+          {
+            "doc_id": "08_api_rate_limits.md",
+            "score": 0.3044
+          },
+          {
+            "doc_id": "09_uptime_sla.md",
+            "score": 0.1168
+          },
+          {
+            "doc_id": "13_backup_versioning.md",
+            "score": 0.0954
+          }
+        ]
+      },
+      {
+        "step": "route_decision",
+        "latency_ms": 0.0,
+        "decision": {
+          "use_tool": true,
+          "tool_query": "Team",
+          "reason": "Question asks for a specific current number, routing to pricing_lookup tool."
+        },
+        "raw_llm_output": "{\"use_tool\": true, \"tool_query\": \"Team\", \"reason\": \"Question asks for a specific current number, routing to pricing_lookup tool.\"}"
+      },
+      {
+        "step": "tool_call",
+        "tool": "pricing_lookup",
+        "query": "Team",
+        "latency_ms": 50.1,
+        "result": {
+          "found": true,
+          "plan_name": "Team",
+          "monthly_price_usd": "24",
+          "annual_price_usd_per_month": "19",
+          "storage_gb": "1000",
+          "max_users": "10",
+          "api_calls_included_per_month": "10000",
+          "overage_rate_per_gb_usd": "0.04"
+        }
+      },
+      {
+        "step": "synthesize_answer",
+        "latency_ms": 0.0
+      }
+    ],
+    "using_mock_llm": true,
+    "retriever_kind": "TfidfRetriever",
+    "kb_results": [
+      {
+        "doc_id": "08_api_rate_limits.md",
+        "score": 0.3044,
+        "text": "# API Rate Limits\nThe CloudNest REST API enforces per-plan rate limits measured in requests per minute (RPM).\nExceeding the rate limit returns HTTP 429 with a Retry-After header.\nExact included API call quotas per plan are tracked in the live pricing/usage system, since they are\nadjusted based on current promotions and plan version."
+      },
+      {
+        "doc_id": "09_uptime_sla.md",
+        "score": 0.1168,
+        "text": "# Uptime SLA\nCloudNest targets 99.9% uptime for Team and Business tiers, with service credits for downtime beyond\nthe SLA threshold, as described in the Master Services Agreement.\nStarter tier does not carry a formal uptime SLA.\nStatus updates are published at status.cloudnest.example."
+      },
+      {
+        "doc_id": "13_backup_versioning.md",
+        "score": 0.0954,
+        "text": "# Backup and Versioning\nCloudNest automatically keeps prior versions of edited files, allowing rollback to any saved version.\nFull account-level backup exports can be requested by admins and are delivered as a downloadable archive.\nVersion history storage does not count against a workspace's storage quota."
+      }
+    ],
+    "router_decision": {
+      "use_tool": true,
+      "tool_query": "Team",
+      "reason": "Question asks for a specific current number, routing to pricing_lookup tool."
+    },
+    "tool_output": {
+      "found": true,
+      "plan_name": "Team",
+      "monthly_price_usd": "24",
+      "annual_price_usd_per_month": "19",
+      "storage_gb": "1000",
+      "max_users": "10",
+      "api_calls_included_per_month": "10000",
+      "overage_rate_per_gb_usd": "0.04"
+    },
+    "answer": "[mock-llm] According to the live pricing lookup, plan_name=Team, monthly_price_usd=24, annual_price_usd_per_month=19, storage_gb=1000, max_users=10, api_calls_included_per_month=10000, overage_rate_per_gb_usd=0.04.",
+    "total_latency_ms": 51.3
+  },
+  {
+    "question": "What is the difference between the Team and Business plans?",
+    "trace": [
+      {
+        "step": "retrieve",
+        "latency_ms": 1.1,
+        "hits": [
+          {
+            "doc_id": "02_plans.md",
+            "score": 0.2273
+          },
+          {
+            "doc_id": "03_refund_policy.md",
+            "score": 0.214
+          },
+          {
+            "doc_id": "06_sharing_permissions.md",
+            "score": 0.1927
+          }
+        ]
+      },
+      {
+        "step": "route_decision",
+        "latency_ms": 0.0,
+        "decision": {
+          "use_tool": false,
+          "tool_query": "Team",
+          "reason": "Question is a general feature/policy question, answerable from KB alone."
+        },
+        "raw_llm_output": "{\"use_tool\": false, \"tool_query\": \"Team\", \"reason\": \"Question is a general feature/policy question, answerable from KB alone.\"}"
+      },
+      {
+        "step": "tool_call",
+        "skipped": true,
+        "reason": "router decided KB was sufficient"
+      },
+      {
+        "step": "synthesize_answer",
+        "latency_ms": 0.0
+      }
+    ],
+    "using_mock_llm": true,
+    "retriever_kind": "TfidfRetriever",
+    "kb_results": [
+      {
+        "doc_id": "02_plans.md",
+        "score": 0.2273,
+        "text": "# CloudNest Plans (Feature Comparison)\nCloudNest offers three tiers: Starter, Team, and Business.\n- Starter: individual use, basic sharing, 2 device sync limit.\n- Team: shared workspaces, admin console, unlimited device sync.\n- Business: SSO, advanced audit logs, dedicated support, custom data residency.\nNote: Exact current pricing, storage quotas, and included API calls change periodically.\nFor up-to-date numbers, always check the live pricing API rather than assuming figures from marketing pages."
+      },
+      {
+        "doc_id": "03_refund_policy.md",
+        "score": 0.214,
+        "text": "# Refund Policy\nCustomers on monthly plans can request a refund within 7 days of a charge if usage was under 1GB.\nAnnual plans are refundable on a pro-rated basis within the first 30 days.\nRefund requests must be submitted via the billing portal or by emailing billing@cloudnest.example.\nRefunds are processed within 5-10 business days."
+      },
+      {
+        "doc_id": "06_sharing_permissions.md",
+        "score": 0.1927,
+        "text": "# Sharing and Permissions\nFiles and folders can be shared via link (view/comment/edit) or invited by email with role-based access.\nRoles available: Viewer, Commenter, Editor, and Owner.\nAdmins on Team and Business plans can restrict external sharing organization-wide via the admin console.\nShared links can be set to expire after a custom number of days."
+      }
+    ],
+    "router_decision": {
+      "use_tool": false,
+      "tool_query": "Team",
+      "reason": "Question is a general feature/policy question, answerable from KB alone."
+    },
+    "tool_output": null,
+    "answer": "[mock-llm] Based on the knowledge base: [02_plans.md] # CloudNest Plans (Feature Comparison)\nCloudNest offers three tiers: Starter, Team, and Business.\n- Starter: individual use, basic sharing, 2 device sync limit.\n- Team: shared workspaces, admin console, unlimited device sync.\n- Business: SSO, advanced audit logs, dedicated support, custom data residency.\nNote: Exact current pricing, storage quotas, and included API calls change perio",
+    "total_latency_ms": 1.2
+  },
+  {
+    "question": "How many API calls does the Business plan include per month?",
+    "trace": [
+      {
+        "step": "retrieve",
+        "latency_ms": 0.6,
+        "hits": [
+          {
+            "doc_id": "08_api_rate_limits.md",
+            "score": 0.348
+          },
+          {
+            "doc_id": "02_plans.md",
+            "score": 0.1902
+          },
+          {
+            "doc_id": "07_integrations.md",
+            "score": 0.1025
+          }
+        ]
+      },
+      {
+        "step": "route_decision",
+        "latency_ms": 0.0,
+        "decision": {
+          "use_tool": true,
+          "tool_query": "Business",
+          "reason": "Question asks for a specific current number, routing to pricing_lookup tool."
+        },
+        "raw_llm_output": "{\"use_tool\": true, \"tool_query\": \"Business\", \"reason\": \"Question asks for a specific current number, routing to pricing_lookup tool.\"}"
+      },
+      {
+        "step": "tool_call",
+        "tool": "pricing_lookup",
+        "query": "Business",
+        "latency_ms": 50.2,
+        "result": {
+          "found": true,
+          "plan_name": "Business",
+          "monthly_price_usd": "59",
+          "annual_price_usd_per_month": "49",
+          "storage_gb": "5000",
+          "max_users": "50",
+          "api_calls_included_per_month": "50000",
+          "overage_rate_per_gb_usd": "0.03"
+        }
+      },
+      {
+        "step": "synthesize_answer",
+        "latency_ms": 0.0
+      }
+    ],
+    "using_mock_llm": true,
+    "retriever_kind": "TfidfRetriever",
+    "kb_results": [
+      {
+        "doc_id": "08_api_rate_limits.md",
+        "score": 0.348,
+        "text": "# API Rate Limits\nThe CloudNest REST API enforces per-plan rate limits measured in requests per minute (RPM).\nExceeding the rate limit returns HTTP 429 with a Retry-After header.\nExact included API call quotas per plan are tracked in the live pricing/usage system, since they are\nadjusted based on current promotions and plan version."
+      },
+      {
+        "doc_id": "02_plans.md",
+        "score": 0.1902,
+        "text": "# CloudNest Plans (Feature Comparison)\nCloudNest offers three tiers: Starter, Team, and Business.\n- Starter: individual use, basic sharing, 2 device sync limit.\n- Team: shared workspaces, admin console, unlimited device sync.\n- Business: SSO, advanced audit logs, dedicated support, custom data residency.\nNote: Exact current pricing, storage quotas, and included API calls change periodically.\nFor up-to-date numbers, always check the live pricing API rather than assuming figures from marketing pages."
+      },
+      {
+        "doc_id": "07_integrations.md",
+        "score": 0.1025,
+        "text": "# Integrations\nCloudNest integrates natively with Slack, Microsoft Teams, Google Workspace, and Zapier.\nAn open REST API is available for custom integrations, documented at api.cloudnest.example/docs.\nWebhooks can be configured for file-created, file-shared, and file-deleted events."
+      }
+    ],
+    "router_decision": {
+      "use_tool": true,
+      "tool_query": "Business",
+      "reason": "Question asks for a specific current number, routing to pricing_lookup tool."
+    },
+    "tool_output": {
+      "found": true,
+      "plan_name": "Business",
+      "monthly_price_usd": "59",
+      "annual_price_usd_per_month": "49",
+      "storage_gb": "5000",
+      "max_users": "50",
+      "api_calls_included_per_month": "50000",
+      "overage_rate_per_gb_usd": "0.03"
+    },
+    "answer": "[mock-llm] According to the live pricing lookup, plan_name=Business, monthly_price_usd=59, annual_price_usd_per_month=49, storage_gb=5000, max_users=50, api_calls_included_per_month=50000, overage_rate_per_gb_usd=0.03.",
+    "total_latency_ms": 51.0
+  },
+  {
+    "question": "Is my data encrypted at rest?",
+    "trace": [
+      {
+        "step": "retrieve",
+        "latency_ms": 1.1,
+        "hits": [
+          {
+            "doc_id": "04_security.md",
+            "score": 0.3108
+          },
+          {
+            "doc_id": "07_integrations.md",
+            "score": 0.0788
+          },
+          {
+            "doc_id": "12_data_retention.md",
+            "score": 0.0715
+          }
+        ]
+      },
+      {
+        "step": "route_decision",
+        "latency_ms": 0.0,
+        "decision": {
+          "use_tool": false,
+          "tool_query": "",
+          "reason": "Question is a general feature/policy question, answerable from KB alone."
+        },
+        "raw_llm_output": "{\"use_tool\": false, \"tool_query\": \"\", \"reason\": \"Question is a general feature/policy question, answerable from KB alone.\"}"
+      },
+      {
+        "step": "tool_call",
+        "skipped": true,
+        "reason": "router decided KB was sufficient"
+      },
+      {
+        "step": "synthesize_answer",
+        "latency_ms": 0.0
+      }
+    ],
+    "using_mock_llm": true,
+    "retriever_kind": "TfidfRetriever",
+    "kb_results": [
+      {
+        "doc_id": "04_security.md",
+        "score": 0.3108,
+        "text": "# Security & Compliance\nAll data in CloudNest is encrypted at rest (AES-256) and in transit (TLS 1.2+).\nCloudNest is SOC 2 Type II certified. Business tier customers can request a copy of the audit report.\nTwo-factor authentication (2FA) is available on all tiers via TOTP apps (Google Authenticator, Authy).\nGDPR data processing agreements are available for EU customers on request."
+      },
+      {
+        "doc_id": "07_integrations.md",
+        "score": 0.0788,
+        "text": "# Integrations\nCloudNest integrates natively with Slack, Microsoft Teams, Google Workspace, and Zapier.\nAn open REST API is available for custom integrations, documented at api.cloudnest.example/docs.\nWebhooks can be configured for file-created, file-shared, and file-deleted events."
+      },
+      {
+        "doc_id": "12_data_retention.md",
+        "score": 0.0715,
+        "text": "# Data Retention and Deletion\nDeleted files are moved to Trash and retained for 30 days before permanent deletion.\nVersion history is retained for 90 days on Team and Business tiers, 7 days on Starter.\nBusiness tier customers can configure custom retention periods for compliance purposes."
+      }
+    ],
+    "router_decision": {
+      "use_tool": false,
+      "tool_query": "",
+      "reason": "Question is a general feature/policy question, answerable from KB alone."
+    },
+    "tool_output": null,
+    "answer": "[mock-llm] Based on the knowledge base: [04_security.md] # Security & Compliance\nAll data in CloudNest is encrypted at rest (AES-256) and in transit (TLS 1.2+).\nCloudNest is SOC 2 Type II certified. Business tier customers can request a copy of the audit report.\nTwo-factor authentication (2FA) is available on all tiers via TOTP apps (Google Authenticator, Authy).\nGDPR data processing agreements are available for EU customers on request.",
+    "total_latency_ms": 1.2
+  },
+  {
+    "question": "What is the annual price per month for the Starter plan?",
+    "trace": [
+      {
+        "step": "retrieve",
+        "latency_ms": 0.7,
+        "hits": [
+          {
+            "doc_id": "08_api_rate_limits.md",
+            "score": 0.2809
+          },
+          {
+            "doc_id": "03_refund_policy.md",
+            "score": 0.1016
+          },
+          {
+            "doc_id": "02_plans.md",
+            "score": 0.0756
+          }
+        ]
+      },
+      {
+        "step": "route_decision",
+        "latency_ms": 0.0,
+        "decision": {
+          "use_tool": true,
+          "tool_query": "Starter",
+          "reason": "Question asks for a specific current number, routing to pricing_lookup tool."
+        },
+        "raw_llm_output": "{\"use_tool\": true, \"tool_query\": \"Starter\", \"reason\": \"Question asks for a specific current number, routing to pricing_lookup tool.\"}"
+      },
+      {
+        "step": "tool_call",
+        "tool": "pricing_lookup",
+        "query": "Starter",
+        "latency_ms": 50.1,
+        "result": {
+          "found": true,
+          "plan_name": "Starter",
+          "monthly_price_usd": "9",
+          "annual_price_usd_per_month": "7",
+          "storage_gb": "100",
+          "max_users": "1",
+          "api_calls_included_per_month": "1000",
+          "overage_rate_per_gb_usd": "0.05"
+        }
+      },
+      {
+        "step": "synthesize_answer",
+        "latency_ms": 0.1
+      }
+    ],
+    "using_mock_llm": true,
+    "retriever_kind": "TfidfRetriever",
+    "kb_results": [
+      {
+        "doc_id": "08_api_rate_limits.md",
+        "score": 0.2809,
+        "text": "# API Rate Limits\nThe CloudNest REST API enforces per-plan rate limits measured in requests per minute (RPM).\nExceeding the rate limit returns HTTP 429 with a Retry-After header.\nExact included API call quotas per plan are tracked in the live pricing/usage system, since they are\nadjusted based on current promotions and plan version."
+      },
+      {
+        "doc_id": "03_refund_policy.md",
+        "score": 0.1016,
+        "text": "# Refund Policy\nCustomers on monthly plans can request a refund within 7 days of a charge if usage was under 1GB.\nAnnual plans are refundable on a pro-rated basis within the first 30 days.\nRefund requests must be submitted via the billing portal or by emailing billing@cloudnest.example.\nRefunds are processed within 5-10 business days."
+      },
+      {
+        "doc_id": "02_plans.md",
+        "score": 0.0756,
+        "text": "# CloudNest Plans (Feature Comparison)\nCloudNest offers three tiers: Starter, Team, and Business.\n- Starter: individual use, basic sharing, 2 device sync limit.\n- Team: shared workspaces, admin console, unlimited device sync.\n- Business: SSO, advanced audit logs, dedicated support, custom data residency.\nNote: Exact current pricing, storage quotas, and included API calls change periodically.\nFor up-to-date numbers, always check the live pricing API rather than assuming figures from marketing pages."
+      }
+    ],
+    "router_decision": {
+      "use_tool": true,
+      "tool_query": "Starter",
+      "reason": "Question asks for a specific current number, routing to pricing_lookup tool."
+    },
+    "tool_output": {
+      "found": true,
+      "plan_name": "Starter",
+      "monthly_price_usd": "9",
+      "annual_price_usd_per_month": "7",
+      "storage_gb": "100",
+      "max_users": "1",
+      "api_calls_included_per_month": "1000",
+      "overage_rate_per_gb_usd": "0.05"
+    },
+    "answer": "[mock-llm] According to the live pricing lookup, plan_name=Starter, monthly_price_usd=9, annual_price_usd_per_month=7, storage_gb=100, max_users=1, api_calls_included_per_month=1000, overage_rate_per_gb_usd=0.05.",
+    "total_latency_ms": 51.1
+  },
+  {
+    "question": "How long is version history retained on the Team plan?",
+    "trace": [
+      {
+        "step": "retrieve",
+        "latency_ms": 1.2,
+        "hits": [
+          {
+            "doc_id": "12_data_retention.md",
+            "score": 0.338
+          },
+          {
+            "doc_id": "08_api_rate_limits.md",
+            "score": 0.2739
+          },
+          {
+            "doc_id": "13_backup_versioning.md",
+            "score": 0.1855
+          }
+        ]
+      },
+      {
+        "step": "route_decision",
+        "latency_ms": 0.0,
+        "decision": {
+          "use_tool": false,
+          "tool_query": "Team",
+          "reason": "Question is a general feature/policy question, answerable from KB alone."
+        },
+        "raw_llm_output": "{\"use_tool\": false, \"tool_query\": \"Team\", \"reason\": \"Question is a general feature/policy question, answerable from KB alone.\"}"
+      },
+      {
+        "step": "tool_call",
+        "skipped": true,
+        "reason": "router decided KB was sufficient"
+      },
+      {
+        "step": "synthesize_answer",
+        "latency_ms": 0.0
+      }
+    ],
+    "using_mock_llm": true,
+    "retriever_kind": "TfidfRetriever",
+    "kb_results": [
+      {
+        "doc_id": "12_data_retention.md",
+        "score": 0.338,
+        "text": "# Data Retention and Deletion\nDeleted files are moved to Trash and retained for 30 days before permanent deletion.\nVersion history is retained for 90 days on Team and Business tiers, 7 days on Starter.\nBusiness tier customers can configure custom retention periods for compliance purposes."
+      },
+      {
+        "doc_id": "08_api_rate_limits.md",
+        "score": 0.2739,
+        "text": "# API Rate Limits\nThe CloudNest REST API enforces per-plan rate limits measured in requests per minute (RPM).\nExceeding the rate limit returns HTTP 429 with a Retry-After header.\nExact included API call quotas per plan are tracked in the live pricing/usage system, since they are\nadjusted based on current promotions and plan version."
+      },
+      {
+        "doc_id": "13_backup_versioning.md",
+        "score": 0.1855,
+        "text": "# Backup and Versioning\nCloudNest automatically keeps prior versions of edited files, allowing rollback to any saved version.\nFull account-level backup exports can be requested by admins and are delivered as a downloadable archive.\nVersion history storage does not count against a workspace's storage quota."
+      }
+    ],
+    "router_decision": {
+      "use_tool": false,
+      "tool_query": "Team",
+      "reason": "Question is a general feature/policy question, answerable from KB alone."
+    },
+    "tool_output": null,
+    "answer": "[mock-llm] Based on the knowledge base: [12_data_retention.md] # Data Retention and Deletion\nDeleted files are moved to Trash and retained for 30 days before permanent deletion.\nVersion history is retained for 90 days on Team and Business tiers, 7 days on Starter.\nBusiness tier customers can configure custom retention periods for compliance purposes.\n\n[08_api_rate_limits.md] # API Rate Limits\nThe CloudNest REST API enforces per-plan rat",
+    "total_latency_ms": 1.3
+  },
+  {
+    "question": "What is the overage rate per GB for the Business plan?",
+    "trace": [
+      {
+        "step": "retrieve",
+        "latency_ms": 0.6,
+        "hits": [
+          {
+            "doc_id": "08_api_rate_limits.md",
+            "score": 0.5804
+          },
+          {
+            "doc_id": "12_data_retention.md",
+            "score": 0.0615
+          },
+          {
+            "doc_id": "10_support_channels.md",
+            "score": 0.0534
+          }
+        ]
+      },
+      {
+        "step": "route_decision",
+        "latency_ms": 0.0,
+        "decision": {
+          "use_tool": true,
+          "tool_query": "Business",
+          "reason": "Question asks for a specific current number, routing to pricing_lookup tool."
+        },
+        "raw_llm_output": "{\"use_tool\": true, \"tool_query\": \"Business\", \"reason\": \"Question asks for a specific current number, routing to pricing_lookup tool.\"}"
+      },
+      {
+        "step": "tool_call",
+        "tool": "pricing_lookup",
+        "query": "Business",
+        "latency_ms": 50.1,
+        "result": {
+          "found": true,
+          "plan_name": "Business",
+          "monthly_price_usd": "59",
+          "annual_price_usd_per_month": "49",
+          "storage_gb": "5000",
+          "max_users": "50",
+          "api_calls_included_per_month": "50000",
+          "overage_rate_per_gb_usd": "0.03"
+        }
+      },
+      {
+        "step": "synthesize_answer",
+        "latency_ms": 0.0
+      }
+    ],
+    "using_mock_llm": true,
+    "retriever_kind": "TfidfRetriever",
+    "kb_results": [
+      {
+        "doc_id": "08_api_rate_limits.md",
+        "score": 0.5804,
+        "text": "# API Rate Limits\nThe CloudNest REST API enforces per-plan rate limits measured in requests per minute (RPM).\nExceeding the rate limit returns HTTP 429 with a Retry-After header.\nExact included API call quotas per plan are tracked in the live pricing/usage system, since they are\nadjusted based on current promotions and plan version."
+      },
+      {
+        "doc_id": "12_data_retention.md",
+        "score": 0.0615,
+        "text": "# Data Retention and Deletion\nDeleted files are moved to Trash and retained for 30 days before permanent deletion.\nVersion history is retained for 90 days on Team and Business tiers, 7 days on Starter.\nBusiness tier customers can configure custom retention periods for compliance purposes."
+      },
+      {
+        "doc_id": "10_support_channels.md",
+        "score": 0.0534,
+        "text": "# Support Channels\nStarter: community forum and email support (48-hour response target).\nTeam: email and live chat support (business hours, 4-hour response target).\nBusiness: dedicated support engineer and 24/7 priority phone support."
+      }
+    ],
+    "router_decision": {
+      "use_tool": true,
+      "tool_query": "Business",
+      "reason": "Question asks for a specific current number, routing to pricing_lookup tool."
+    },
+    "tool_output": {
+      "found": true,
+      "plan_name": "Business",
+      "monthly_price_usd": "59",
+      "annual_price_usd_per_month": "49",
+      "storage_gb": "5000",
+      "max_users": "50",
+      "api_calls_included_per_month": "50000",
+      "overage_rate_per_gb_usd": "0.03"
+    },
+    "answer": "[mock-llm] According to the live pricing lookup, plan_name=Business, monthly_price_usd=59, annual_price_usd_per_month=49, storage_gb=5000, max_users=50, api_calls_included_per_month=50000, overage_rate_per_gb_usd=0.03.",
+    "total_latency_ms": 51.0
+  },
+  {
+    "question": "Can I restrict external sharing for my whole organization?",
+    "trace": [
+      {
+        "step": "retrieve",
+        "latency_ms": 1.1,
+        "hits": [
+          {
+            "doc_id": "06_sharing_permissions.md",
+            "score": 0.3706
+          },
+          {
+            "doc_id": "11_onboarding.md",
+            "score": 0.1359
+          },
+          {
+            "doc_id": "01_overview.md",
+            "score": 0.05
+          }
+        ]
+      },
+      {
+        "step": "route_decision",
+        "latency_ms": 0.0,
+        "decision": {
+          "use_tool": false,
+          "tool_query": "",
+          "reason": "Question is a general feature/policy question, answerable from KB alone."
+        },
+        "raw_llm_output": "{\"use_tool\": false, \"tool_query\": \"\", \"reason\": \"Question is a general feature/policy question, answerable from KB alone.\"}"
+      },
+      {
+        "step": "tool_call",
+        "skipped": true,
+        "reason": "router decided KB was sufficient"
+      },
+      {
+        "step": "synthesize_answer",
+        "latency_ms": 0.0
+      }
+    ],
+    "using_mock_llm": true,
+    "retriever_kind": "TfidfRetriever",
+    "kb_results": [
+      {
+        "doc_id": "06_sharing_permissions.md",
+        "score": 0.3706,
+        "text": "# Sharing and Permissions\nFiles and folders can be shared via link (view/comment/edit) or invited by email with role-based access.\nRoles available: Viewer, Commenter, Editor, and Owner.\nAdmins on Team and Business plans can restrict external sharing organization-wide via the admin console.\nShared links can be set to expire after a custom number of days."
+      },
+      {
+        "doc_id": "11_onboarding.md",
+        "score": 0.1359,
+        "text": "# Onboarding Steps\n1. Create a workspace and verify your email domain.\n2. Invite team members via email or a shareable invite link.\n3. Install the desktop sync client (optional) and connect integrations.\n4. Set organization-wide sharing and retention policies from the admin console."
+      },
+      {
+        "doc_id": "01_overview.md",
+        "score": 0.05,
+        "text": "# CloudNest Overview\nCloudNest is a cloud file storage and collaboration platform for small and mid-sized teams.\nIt offers file sync, sharing, granular permissions, and integrations with common productivity tools.\nCloudNest is available as a web app, desktop client (Windows/Mac/Linux), and mobile app (iOS/Android)."
+      }
+    ],
+    "router_decision": {
+      "use_tool": false,
+      "tool_query": "",
+      "reason": "Question is a general feature/policy question, answerable from KB alone."
+    },
+    "tool_output": null,
+    "answer": "[mock-llm] Based on the knowledge base: [06_sharing_permissions.md] # Sharing and Permissions\nFiles and folders can be shared via link (view/comment/edit) or invited by email with role-based access.\nRoles available: Viewer, Commenter, Editor, and Owner.\nAdmins on Team and Business plans can restrict external sharing organization-wide via the admin console.\nShared links can be set to expire after a custom number of days.\n\n[11_onboarding.",
+    "total_latency_ms": 1.2
+  },
+  {
+    "question": "How many users are allowed on the Starter plan?",
+    "trace": [
+      {
+        "step": "retrieve",
+        "latency_ms": 0.6,
+        "hits": [
+          {
+            "doc_id": "08_api_rate_limits.md",
+            "score": 0.2809
+          },
+          {
+            "doc_id": "15_deprecations.md",
+            "score": 0.0894
+          },
+          {
+            "doc_id": "02_plans.md",
+            "score": 0.0756
+          }
+        ]
+      },
+      {
+        "step": "route_decision",
+        "latency_ms": 0.0,
+        "decision": {
+          "use_tool": true,
+          "tool_query": "Starter",
+          "reason": "Question asks for a specific current number, routing to pricing_lookup tool."
+        },
+        "raw_llm_output": "{\"use_tool\": true, \"tool_query\": \"Starter\", \"reason\": \"Question asks for a specific current number, routing to pricing_lookup tool.\"}"
+      },
+      {
+        "step": "tool_call",
+        "tool": "pricing_lookup",
+        "query": "Starter",
+        "latency_ms": 50.1,
+        "result": {
+          "found": true,
+          "plan_name": "Starter",
+          "monthly_price_usd": "9",
+          "annual_price_usd_per_month": "7",
+          "storage_gb": "100",
+          "max_users": "1",
+          "api_calls_included_per_month": "1000",
+          "overage_rate_per_gb_usd": "0.05"
+        }
+      },
+      {
+        "step": "synthesize_answer",
+        "latency_ms": 0.0
+      }
+    ],
+    "using_mock_llm": true,
+    "retriever_kind": "TfidfRetriever",
+    "kb_results": [
+      {
+        "doc_id": "08_api_rate_limits.md",
+        "score": 0.2809,
+        "text": "# API Rate Limits\nThe CloudNest REST API enforces per-plan rate limits measured in requests per minute (RPM).\nExceeding the rate limit returns HTTP 429 with a Retry-After header.\nExact included API call quotas per plan are tracked in the live pricing/usage system, since they are\nadjusted based on current promotions and plan version."
+      },
+      {
+        "doc_id": "15_deprecations.md",
+        "score": 0.0894,
+        "text": "# Deprecation Notices\nThe legacy CloudNest Sync v1 desktop client was deprecated and no longer receives security updates.\nUsers on Sync v1 are prompted to upgrade to Sync v2, which supports selective sync and faster indexing.\nThe v1 public API (api.cloudnest.example/v1) will be sunset; new integrations should use v2 endpoints."
+      },
+      {
+        "doc_id": "02_plans.md",
+        "score": 0.0756,
+        "text": "# CloudNest Plans (Feature Comparison)\nCloudNest offers three tiers: Starter, Team, and Business.\n- Starter: individual use, basic sharing, 2 device sync limit.\n- Team: shared workspaces, admin console, unlimited device sync.\n- Business: SSO, advanced audit logs, dedicated support, custom data residency.\nNote: Exact current pricing, storage quotas, and included API calls change periodically.\nFor up-to-date numbers, always check the live pricing API rather than assuming figures from marketing pages."
+      }
+    ],
+    "router_decision": {
+      "use_tool": true,
+      "tool_query": "Starter",
+      "reason": "Question asks for a specific current number, routing to pricing_lookup tool."
+    },
+    "tool_output": {
+      "found": true,
+      "plan_name": "Starter",
+      "monthly_price_usd": "9",
+      "annual_price_usd_per_month": "7",
+      "storage_gb": "100",
+      "max_users": "1",
+      "api_calls_included_per_month": "1000",
+      "overage_rate_per_gb_usd": "0.05"
+    },
+    "answer": "[mock-llm] According to the live pricing lookup, plan_name=Starter, monthly_price_usd=9, annual_price_usd_per_month=7, storage_gb=100, max_users=1, api_calls_included_per_month=1000, overage_rate_per_gb_usd=0.05.",
+    "total_latency_ms": 51.0
+  },
+  {
+    "question": "What support channels are available on the Business tier?",
+    "trace": [
+      {
+        "step": "retrieve",
+        "latency_ms": 1.2,
+        "hits": [
+          {
+            "doc_id": "10_support_channels.md",
+            "score": 0.4092
+          },
+          {
+            "doc_id": "04_security.md",
+            "score": 0.164
+          },
+          {
+            "doc_id": "12_data_retention.md",
+            "score": 0.1171
+          }
+        ]
+      },
+      {
+        "step": "route_decision",
+        "latency_ms": 0.0,
+        "decision": {
+          "use_tool": false,
+          "tool_query": "Business",
+          "reason": "Question is a general feature/policy question, answerable from KB alone."
+        },
+        "raw_llm_output": "{\"use_tool\": false, \"tool_query\": \"Business\", \"reason\": \"Question is a general feature/policy question, answerable from KB alone.\"}"
+      },
+      {
+        "step": "tool_call",
+        "skipped": true,
+        "reason": "router decided KB was sufficient"
+      },
+      {
+        "step": "synthesize_answer",
+        "latency_ms": 0.0
+      }
+    ],
+    "using_mock_llm": true,
+    "retriever_kind": "TfidfRetriever",
+    "kb_results": [
+      {
+        "doc_id": "10_support_channels.md",
+        "score": 0.4092,
+        "text": "# Support Channels\nStarter: community forum and email support (48-hour response target).\nTeam: email and live chat support (business hours, 4-hour response target).\nBusiness: dedicated support engineer and 24/7 priority phone support."
+      },
+      {
+        "doc_id": "04_security.md",
+        "score": 0.164,
+        "text": "# Security & Compliance\nAll data in CloudNest is encrypted at rest (AES-256) and in transit (TLS 1.2+).\nCloudNest is SOC 2 Type II certified. Business tier customers can request a copy of the audit report.\nTwo-factor authentication (2FA) is available on all tiers via TOTP apps (Google Authenticator, Authy).\nGDPR data processing agreements are available for EU customers on request."
+      },
+      {
+        "doc_id": "12_data_retention.md",
+        "score": 0.1171,
+        "text": "# Data Retention and Deletion\nDeleted files are moved to Trash and retained for 30 days before permanent deletion.\nVersion history is retained for 90 days on Team and Business tiers, 7 days on Starter.\nBusiness tier customers can configure custom retention periods for compliance purposes."
+      }
+    ],
+    "router_decision": {
+      "use_tool": false,
+      "tool_query": "Business",
+      "reason": "Question is a general feature/policy question, answerable from KB alone."
+    },
+    "tool_output": null,
+    "answer": "[mock-llm] Based on the knowledge base: [10_support_channels.md] # Support Channels\nStarter: community forum and email support (48-hour response target).\nTeam: email and live chat support (business hours, 4-hour response target).\nBusiness: dedicated support engineer and 24/7 priority phone support.\n\n[04_security.md] # Security & Compliance\nAll data in CloudNest is encrypted at rest (AES-256) and in transit (TLS 1.2+).\nCloudNest is SOC 2",
+    "total_latency_ms": 1.2
+  },
+  {
+    "question": "What happens to files after I delete them?",
+    "trace": [
+      {
+        "step": "retrieve",
+        "latency_ms": 0.7,
+        "hits": [
+          {
+            "doc_id": "13_backup_versioning.md",
+            "score": 0.1275
+          },
+          {
+            "doc_id": "14_mobile_app.md",
+            "score": 0.1258
+          },
+          {
+            "doc_id": "06_sharing_permissions.md",
+            "score": 0.1254
+          }
+        ]
+      },
+      {
+        "step": "route_decision",
+        "latency_ms": 0.0,
+        "decision": {
+          "use_tool": false,
+          "tool_query": "",
+          "reason": "Question is a general feature/policy question, answerable from KB alone."
+        },
+        "raw_llm_output": "{\"use_tool\": false, \"tool_query\": \"\", \"reason\": \"Question is a general feature/policy question, answerable from KB alone.\"}"
+      },
+      {
+        "step": "tool_call",
+        "skipped": true,
+        "reason": "router decided KB was sufficient"
+      },
+      {
+        "step": "synthesize_answer",
+        "latency_ms": 0.0
+      }
+    ],
+    "using_mock_llm": true,
+    "retriever_kind": "TfidfRetriever",
+    "kb_results": [
+      {
+        "doc_id": "13_backup_versioning.md",
+        "score": 0.1275,
+        "text": "# Backup and Versioning\nCloudNest automatically keeps prior versions of edited files, allowing rollback to any saved version.\nFull account-level backup exports can be requested by admins and are delivered as a downloadable archive.\nVersion history storage does not count against a workspace's storage quota."
+      },
+      {
+        "doc_id": "14_mobile_app.md",
+        "score": 0.1258,
+        "text": "# Mobile App\nThe CloudNest mobile app supports offline access to starred files, camera upload, and biometric lock.\nPush notifications can be configured per-folder for file changes and comments.\nThe mobile app is available on iOS 15+ and Android 10+."
+      },
+      {
+        "doc_id": "06_sharing_permissions.md",
+        "score": 0.1254,
+        "text": "# Sharing and Permissions\nFiles and folders can be shared via link (view/comment/edit) or invited by email with role-based access.\nRoles available: Viewer, Commenter, Editor, and Owner.\nAdmins on Team and Business plans can restrict external sharing organization-wide via the admin console.\nShared links can be set to expire after a custom number of days."
+      }
+    ],
+    "router_decision": {
+      "use_tool": false,
+      "tool_query": "",
+      "reason": "Question is a general feature/policy question, answerable from KB alone."
+    },
+    "tool_output": null,
+    "answer": "[mock-llm] Based on the knowledge base: [13_backup_versioning.md] # Backup and Versioning\nCloudNest automatically keeps prior versions of edited files, allowing rollback to any saved version.\nFull account-level backup exports can be requested by admins and are delivered as a downloadable archive.\nVersion history storage does not count against a workspace's storage quota.\n\n[14_mobile_app.md] # Mobile App\nThe CloudNest mobile app supports",
+    "total_latency_ms": 0.8
+  },
+  {
+    "question": "How much storage do I get on the Team plan?",
+    "trace": [
+      {
+        "step": "retrieve",
+        "latency_ms": 0.6,
+        "hits": [
+          {
+            "doc_id": "08_api_rate_limits.md",
+            "score": 0.3164
+          },
+          {
+            "doc_id": "13_backup_versioning.md",
+            "score": 0.158
+          },
+          {
+            "doc_id": "02_plans.md",
+            "score": 0.124
+          }
+        ]
+      },
+      {
+        "step": "route_decision",
+        "latency_ms": 0.1,
+        "decision": {
+          "use_tool": true,
+          "tool_query": "Team",
+          "reason": "Question asks for a specific current number, routing to pricing_lookup tool."
+        },
+        "raw_llm_output": "{\"use_tool\": true, \"tool_query\": \"Team\", \"reason\": \"Question asks for a specific current number, routing to pricing_lookup tool.\"}"
+      },
+      {
+        "step": "tool_call",
+        "tool": "pricing_lookup",
+        "query": "Team",
+        "latency_ms": 50.2,
+        "result": {
+          "found": true,
+          "plan_name": "Team",
+          "monthly_price_usd": "24",
+          "annual_price_usd_per_month": "19",
+          "storage_gb": "1000",
+          "max_users": "10",
+          "api_calls_included_per_month": "10000",
+          "overage_rate_per_gb_usd": "0.04"
+        }
+      },
+      {
+        "step": "synthesize_answer",
+        "latency_ms": 0.0
+      }
+    ],
+    "using_mock_llm": true,
+    "retriever_kind": "TfidfRetriever",
+    "kb_results": [
+      {
+        "doc_id": "08_api_rate_limits.md",
+        "score": 0.3164,
+        "text": "# API Rate Limits\nThe CloudNest REST API enforces per-plan rate limits measured in requests per minute (RPM).\nExceeding the rate limit returns HTTP 429 with a Retry-After header.\nExact included API call quotas per plan are tracked in the live pricing/usage system, since they are\nadjusted based on current promotions and plan version."
+      },
+      {
+        "doc_id": "13_backup_versioning.md",
+        "score": 0.158,
+        "text": "# Backup and Versioning\nCloudNest automatically keeps prior versions of edited files, allowing rollback to any saved version.\nFull account-level backup exports can be requested by admins and are delivered as a downloadable archive.\nVersion history storage does not count against a workspace's storage quota."
+      },
+      {
+        "doc_id": "02_plans.md",
+        "score": 0.124,
+        "text": "# CloudNest Plans (Feature Comparison)\nCloudNest offers three tiers: Starter, Team, and Business.\n- Starter: individual use, basic sharing, 2 device sync limit.\n- Team: shared workspaces, admin console, unlimited device sync.\n- Business: SSO, advanced audit logs, dedicated support, custom data residency.\nNote: Exact current pricing, storage quotas, and included API calls change periodically.\nFor up-to-date numbers, always check the live pricing API rather than assuming figures from marketing pages."
+      }
+    ],
+    "router_decision": {
+      "use_tool": true,
+      "tool_query": "Team",
+      "reason": "Question asks for a specific current number, routing to pricing_lookup tool."
+    },
+    "tool_output": {
+      "found": true,
+      "plan_name": "Team",
+      "monthly_price_usd": "24",
+      "annual_price_usd_per_month": "19",
+      "storage_gb": "1000",
+      "max_users": "10",
+      "api_calls_included_per_month": "10000",
+      "overage_rate_per_gb_usd": "0.04"
+    },
+    "answer": "[mock-llm] According to the live pricing lookup, plan_name=Team, monthly_price_usd=24, annual_price_usd_per_month=19, storage_gb=1000, max_users=10, api_calls_included_per_month=10000, overage_rate_per_gb_usd=0.04.",
+    "total_latency_ms": 51.0
+  },
+  {
+    "question": "What happens if I go over my storage limit, and what's the exact per-GB overage charge?",
+    "trace": [
+      {
+        "step": "retrieve",
+        "latency_ms": 1.2,
+        "hits": [
+          {
+            "doc_id": "02_plans.md",
+            "score": 0.1697
+          },
+          {
+            "doc_id": "08_api_rate_limits.md",
+            "score": 0.1244
+          },
+          {
+            "doc_id": "13_backup_versioning.md",
+            "score": 0.1236
+          }
+        ]
+      },
+      {
+        "step": "route_decision",
+        "latency_ms": 0.0,
+        "decision": {
+          "use_tool": true,
+          "tool_query": "Team",
+          "reason": "Question asks for a specific current number, routing to pricing_lookup tool."
+        },
+        "raw_llm_output": "{\"use_tool\": true, \"tool_query\": \"Team\", \"reason\": \"Question asks for a specific current number, routing to pricing_lookup tool.\"}"
+      },
+      {
+        "step": "tool_call",
+        "tool": "pricing_lookup",
+        "query": "Team",
+        "latency_ms": 50.2,
+        "result": {
+          "found": true,
+          "plan_name": "Team",
+          "monthly_price_usd": "24",
+          "annual_price_usd_per_month": "19",
+          "storage_gb": "1000",
+          "max_users": "10",
+          "api_calls_included_per_month": "10000",
+          "overage_rate_per_gb_usd": "0.04"
+        }
+      },
+      {
+        "step": "synthesize_answer",
+        "latency_ms": 0.0
+      }
+    ],
+    "using_mock_llm": true,
+    "retriever_kind": "TfidfRetriever",
+    "kb_results": [
+      {
+        "doc_id": "02_plans.md",
+        "score": 0.1697,
+        "text": "# CloudNest Plans (Feature Comparison)\nCloudNest offers three tiers: Starter, Team, and Business.\n- Starter: individual use, basic sharing, 2 device sync limit.\n- Team: shared workspaces, admin console, unlimited device sync.\n- Business: SSO, advanced audit logs, dedicated support, custom data residency.\nNote: Exact current pricing, storage quotas, and included API calls change periodically.\nFor up-to-date numbers, always check the live pricing API rather than assuming figures from marketing pages."
+      },
+      {
+        "doc_id": "08_api_rate_limits.md",
+        "score": 0.1244,
+        "text": "# API Rate Limits\nThe CloudNest REST API enforces per-plan rate limits measured in requests per minute (RPM).\nExceeding the rate limit returns HTTP 429 with a Retry-After header.\nExact included API call quotas per plan are tracked in the live pricing/usage system, since they are\nadjusted based on current promotions and plan version."
+      },
+      {
+        "doc_id": "13_backup_versioning.md",
+        "score": 0.1236,
+        "text": "# Backup and Versioning\nCloudNest automatically keeps prior versions of edited files, allowing rollback to any saved version.\nFull account-level backup exports can be requested by admins and are delivered as a downloadable archive.\nVersion history storage does not count against a workspace's storage quota."
+      }
+    ],
+    "router_decision": {
+      "use_tool": true,
+      "tool_query": "Team",
+      "reason": "Question asks for a specific current number, routing to pricing_lookup tool."
+    },
+    "tool_output": {
+      "found": true,
+      "plan_name": "Team",
+      "monthly_price_usd": "24",
+      "annual_price_usd_per_month": "19",
+      "storage_gb": "1000",
+      "max_users": "10",
+      "api_calls_included_per_month": "10000",
+      "overage_rate_per_gb_usd": "0.04"
+    },
+    "answer": "[mock-llm] According to the live pricing lookup, plan_name=Team, monthly_price_usd=24, annual_price_usd_per_month=19, storage_gb=1000, max_users=10, api_calls_included_per_month=10000, overage_rate_per_gb_usd=0.04.",
+    "total_latency_ms": 51.6
+  },
+  {
+    "question": "If I exceed my included API calls on the Business plan, what happens and what does it cost?",
+    "trace": [
+      {
+        "step": "retrieve",
+        "latency_ms": 1.2,
+        "hits": [
+          {
+            "doc_id": "08_api_rate_limits.md",
+            "score": 0.3688
+          },
+          {
+            "doc_id": "02_plans.md",
+            "score": 0.2243
+          },
+          {
+            "doc_id": "07_integrations.md",
+            "score": 0.093
+          }
+        ]
+      },
+      {
+        "step": "route_decision",
+        "latency_ms": 0.0,
+        "decision": {
+          "use_tool": true,
+          "tool_query": "Business",
+          "reason": "Question asks for a specific current number, routing to pricing_lookup tool."
+        },
+        "raw_llm_output": "{\"use_tool\": true, \"tool_query\": \"Business\", \"reason\": \"Question asks for a specific current number, routing to pricing_lookup tool.\"}"
+      },
+      {
+        "step": "tool_call",
+        "tool": "pricing_lookup",
+        "query": "Business",
+        "latency_ms": 50.1,
+        "result": {
+          "found": true,
+          "plan_name": "Business",
+          "monthly_price_usd": "59",
+          "annual_price_usd_per_month": "49",
+          "storage_gb": "5000",
+          "max_users": "50",
+          "api_calls_included_per_month": "50000",
+          "overage_rate_per_gb_usd": "0.03"
+        }
+      },
+      {
+        "step": "synthesize_answer",
+        "latency_ms": 0.0
+      }
+    ],
+    "using_mock_llm": true,
+    "retriever_kind": "TfidfRetriever",
+    "kb_results": [
+      {
+        "doc_id": "08_api_rate_limits.md",
+        "score": 0.3688,
+        "text": "# API Rate Limits\nThe CloudNest REST API enforces per-plan rate limits measured in requests per minute (RPM).\nExceeding the rate limit returns HTTP 429 with a Retry-After header.\nExact included API call quotas per plan are tracked in the live pricing/usage system, since they are\nadjusted based on current promotions and plan version."
+      },
+      {
+        "doc_id": "02_plans.md",
+        "score": 0.2243,
+        "text": "# CloudNest Plans (Feature Comparison)\nCloudNest offers three tiers: Starter, Team, and Business.\n- Starter: individual use, basic sharing, 2 device sync limit.\n- Team: shared workspaces, admin console, unlimited device sync.\n- Business: SSO, advanced audit logs, dedicated support, custom data residency.\nNote: Exact current pricing, storage quotas, and included API calls change periodically.\nFor up-to-date numbers, always check the live pricing API rather than assuming figures from marketing pages."
+      },
+      {
+        "doc_id": "07_integrations.md",
+        "score": 0.093,
+        "text": "# Integrations\nCloudNest integrates natively with Slack, Microsoft Teams, Google Workspace, and Zapier.\nAn open REST API is available for custom integrations, documented at api.cloudnest.example/docs.\nWebhooks can be configured for file-created, file-shared, and file-deleted events."
+      }
+    ],
+    "router_decision": {
+      "use_tool": true,
+      "tool_query": "Business",
+      "reason": "Question asks for a specific current number, routing to pricing_lookup tool."
+    },
+    "tool_output": {
+      "found": true,
+      "plan_name": "Business",
+      "monthly_price_usd": "59",
+      "annual_price_usd_per_month": "49",
+      "storage_gb": "5000",
+      "max_users": "50",
+      "api_calls_included_per_month": "50000",
+      "overage_rate_per_gb_usd": "0.03"
+    },
+    "answer": "[mock-llm] According to the live pricing lookup, plan_name=Business, monthly_price_usd=59, annual_price_usd_per_month=49, storage_gb=5000, max_users=50, api_calls_included_per_month=50000, overage_rate_per_gb_usd=0.03.",
+    "total_latency_ms": 51.5
+  }
+]

@@ -1,0 +1,4 @@
+plan_name,monthly_price_usd,annual_price_usd_per_month,storage_gb,max_users,api_calls_included_per_month,overage_rate_per_gb_usd
+Starter,9,7,100,1,1000,0.05
+Team,24,19,1000,10,10000,0.04
+Business,59,49,5000,50,50000,0.03

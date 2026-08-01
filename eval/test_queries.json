@@ -1,0 +1,16 @@
+[
+  {"id": 1, "question": "How much does the Team plan cost per month?", "expected_route": "tool"},
+  {"id": 2, "question": "What is the difference between the Team and Business plans?", "expected_route": "kb"},
+  {"id": 3, "question": "How many API calls does the Business plan include per month?", "expected_route": "tool"},
+  {"id": 4, "question": "Is my data encrypted at rest?", "expected_route": "kb"},
+  {"id": 5, "question": "What is the annual price per month for the Starter plan?", "expected_route": "tool"},
+  {"id": 6, "question": "How long is version history retained on the Team plan?", "expected_route": "kb"},
+  {"id": 7, "question": "What is the overage rate per GB for the Business plan?", "expected_route": "tool"},
+  {"id": 8, "question": "Can I restrict external sharing for my whole organization?", "expected_route": "kb"},
+  {"id": 9, "question": "How many users are allowed on the Starter plan?", "expected_route": "tool"},
+  {"id": 10, "question": "What support channels are available on the Business tier?", "expected_route": "kb"},
+  {"id": 11, "question": "What happens to files after I delete them?", "expected_route": "kb"},
+  {"id": 12, "question": "How much storage do I get on the Team plan?", "expected_route": "tool"},
+  {"id": 13, "question": "What happens if I go over my storage limit, and what's the exact per-GB overage charge?", "expected_route": "tool"},
+  {"id": 14, "question": "If I exceed my included API calls on the Business plan, what happens and what does it cost?", "expected_route": "tool"}
+]
