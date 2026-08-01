@@ -5,8 +5,8 @@ combining a knowledge-base retriever, an LLM reasoner that decides whether it ne
 CSV-backed "live pricing API" tool — with a full step-by-step trace logged for every query.
 
 > ### 🎥 Video walkthrough
-> **`>>> PASTE YOUR LOOM/YOUTUBE LINK HERE BEFORE SUBMITTING <<<`**
-> *(5-8 min: architecture, code walkthrough, live demo on 3-4 queries, and honest learnings)*
+> **https://youtu.be/9BQw1Vi_3Ps?si=gUeOrPjqXPhGCqJd**
+> *(11 min: architecture, code walkthrough, live demo on 4 queries, and honest learnings)*
 
 ---
 
@@ -15,6 +15,9 @@ CSV-backed "live pricing API" tool — with a full step-by-step trace logged for
 The React UI (see §9) renders the agent's full reasoning trace as a live waterfall — each step
 timed and color-coded by the kind of work it does (teal = reading stored KB data, violet = LLM
 reasoning, amber = a live tool call).
+
+**System Architecture** — illustrates the complete agentic pipeline, showing how a user query flows through retrieval, LLM reasoning, conditional tool execution, and final answer generation:
+![System Architecture](docs/screenshots/flow.png)
 
 **Tool-routed query** — the router recognized this needs a live number and called `pricing_lookup`:
 ![Tool-routed query result](docs/screenshots/02_tool_routed_query.png)
@@ -268,7 +271,7 @@ Notes on answer quality (manual review of `eval/results_v2.md`):
 - Mock LLM path exists only to make the repo runnable without a key; it is not a substitute for
   the real model evaluation required by the assignment (see §6 action item).
 
-## 9. React UI (optional, for the demo)
+## 9. React UI 
 
 A small React frontend (`frontend/`) sits on top of the exact same `Controller` used by
 `main.py` and `eval/run_eval.py` -- no pipeline logic is duplicated. `api.py` is a thin FastAPI
@@ -302,17 +305,6 @@ the frontend.
 Click one of the example query chips, or type your own, choose a router version and retriever, and
 hit Run to see the full trace render.
 
-## 10. Demo script (for the video)
 
-1. Show the file layout and explain the four components (30s).
-2. Walk through `controller.py`'s `run()` method — this is the shared-state orchestration (1-2 min).
-3. Open the React UI (§9), run 3-4 live queries, and point out the waterfall trace and the
-   KB-only vs. tool-routed badge for each — this is the most visual way to show the agentic
-   decision actually happening in real time (2-3 min).
-4. Run `python eval/compare_retrievers.py` to show TF-IDF vs. the real embedding retriever
-   side by side on all test queries (zero API cost) — good evidence for why TF-IDF was chosen
-   as the default despite embeddings being fully implemented (30s-1min).
-5. Show `eval/results_v2.md` and discuss the routing accuracy / latency numbers (1 min).
-6. Discuss one thing that didn't work perfectly (e.g. the Groq-vs-named-provider tradeoff, or the
-   v1/v2 router showing no accuracy difference on this test set) and what you'd do with more
-   time (1 min).
+## THANK YOU
+
