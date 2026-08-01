@@ -4,7 +4,34 @@ A small agentic pipeline that answers questions about a fictional SaaS product (
 combining a knowledge-base retriever, an LLM reasoner that decides whether it needs a tool, and a
 CSV-backed "live pricing API" tool — with a full step-by-step trace logged for every query.
 
-**Video walkthrough:** `<PASTE YOUR LOOM/YOUTUBE LINK HERE BEFORE SUBMITTING>`
+> ### 🎥 Video walkthrough
+> **`>>> PASTE YOUR LOOM/YOUTUBE LINK HERE BEFORE SUBMITTING <<<`**
+> *(5-8 min: architecture, code walkthrough, live demo on 3-4 queries, and honest learnings)*
+
+---
+
+## Screenshots
+
+The React UI (see §9) renders the agent's full reasoning trace as a live waterfall — each step
+timed and color-coded by the kind of work it does (teal = reading stored KB data, violet = LLM
+reasoning, amber = a live tool call).
+
+**Tool-routed query** — the router recognized this needs a live number and called `pricing_lookup`:
+![Tool-routed query result](docs/screenshots/02_tool_routed_query.png)
+
+**Expanded trace detail** — clicking any step shows its raw JSON, e.g. the tool call's input/output:
+![Expanded trace detail](docs/screenshots/03_expanded_trace_detail.png)
+
+**KB-only query on mobile** — the router correctly skipped the tool for a general feature question:
+![KB-only query, mobile viewport](docs/screenshots/04_mobile_kb_only_query.png)
+
+**Empty state / initial load:**
+![Empty state](docs/screenshots/01_empty_state.png)
+
+> Note: the screenshots above were captured during development using the `MockLLM` fallback (see
+> §4), so the router's `reason` text reads a bit more mechanically than a real model's. Consider
+> swapping in 1-2 screenshots from an actual Groq/OpenAI/Anthropic-backed run before final
+> submission for a more natural demonstration — the UI and trace structure are identical either way.
 
 ---
 
